@@ -15,5 +15,5 @@ export class QuestionnaireQuestion {
   question: Question;
 
   @Column({ default: 0 })
-  priority: number; // Determines the order of questions in the questionnaire
+  priority: number;
 }

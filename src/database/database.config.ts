@@ -8,7 +8,6 @@ import { Question } from '../questions/entities/question.entity';
 import { UserAnswer } from '../user-answers/entities/user-answer.entity';
 import { QuestionnaireQuestion } from '../questionnaires/entities/questionnaire-question.entity';
 
-// Common database configuration
 const commonConfig = {
   type: 'postgres' as const,
   host: process.env.PGHOST,
@@ -17,20 +16,18 @@ const commonConfig = {
   password: process.env.PGPASSWORD,
   database: process.env.PGDATABASE,
   entities: [User, Questionnaire, Question, UserAnswer, QuestionnaireQuestion],
-  migrations: ['dist/migrations/*.js'], // Adjusted for compiled JS migrations
+  migrations: ['dist/migrations/*.js'],
   migrationsTableName: 'migrations',
-  synchronize: false, // Always false in production
-  logging: true,
+  synchronize: false,
+  logging: false,
   ssl: {rejectUnauthorized: false},
 };
 
-// NestJS TypeORM configuration
 export const typeOrmConfig: TypeOrmModuleOptions = {
   ...commonConfig,
   autoLoadEntities: true,
 };
 
-// TypeORM CLI DataSource configuration
 export const dataSourceOptions: PostgresConnectionOptions = {
   ...commonConfig,
 };

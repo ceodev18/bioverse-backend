@@ -117,9 +117,9 @@ export class QuestionnairesService {
         "questionnaire.id AS questionnaireId",
         "questionnaire.title AS questionnaireTitle",
       ])
-      .where("user.role = :role", { role: "user" }) // Solo usuarios normales
+      .where("user.role = :role", { role: "user" })
       .groupBy("user.id, user.username, questionnaire.id, questionnaire.title")
-      .having("COUNT(answer.id) > 0") // Solo los que tienen respuestas
+      .having("COUNT(answer.id) > 0")
       .getRawMany();
   }
 
@@ -161,6 +161,8 @@ export class QuestionnairesService {
         user: { id: userId }
       }
     });
+    console.log("existingAnswers ",existingAnswers)
+    console.log("result  ",!!existingAnswers)
     return !!existingAnswers;
   }
 

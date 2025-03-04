@@ -51,8 +51,8 @@ export class CsvUploadService {
       console.log('Processing row:', row);
 
       const questionnaire = this.questionnaireRepo.create({
-        id: Number(row.id), // Ensure ID is a number
-        title: row.title || row.name, // Try both column names
+        id: Number(row.id), 
+        title: row.title || row.name, 
         description: row.description || '',
       });
 
@@ -70,17 +70,17 @@ export class CsvUploadService {
     for (const row of data) {
       let parsedData;
       try {
-        parsedData = JSON.parse(row.question); // Ensure `row.question` is a valid JSON object
+        parsedData = JSON.parse(row.question); 
       } catch (error) {
         console.error('Failed to parse question field as JSON:', row.question);
-        continue; // Skip this row if parsing fails
+        continue; 
       }
 
       const question = this.questionRepo.create({
-        id: Number(row.id), // Ensure ID is a number
-        text: parsedData.question, // Extract actual question text
-        type: parsedData.type, // Extract type from JSON
-        options: parsedData.options || [], // Ensure options are stored correctly
+        id: Number(row.id), 
+        text: parsedData.question, 
+        type: parsedData.type, 
+        options: parsedData.options || [], 
       });
 
       console.log('Processed Question:', question);
@@ -99,14 +99,14 @@ export class CsvUploadService {
       const questionnaireId = Number(row.questionnaire_id);
       const questionId = Number(row.question_id);
 
-      // Check if the questionnaire exists
+      
       const questionnaireExists = await this.questionnaireRepo.findOne({ where: { id: questionnaireId } });
       if (!questionnaireExists) {
         console.warn(`Questionnaire ID ${questionnaireId} not found. Skipping row.`);
         continue;
       }
 
-      // Check if the question exists
+      
       const questionExists = await this.questionRepo.findOne({ where: { id: questionId } });
       if (!questionExists) {
         console.warn(`Question ID ${questionId} not found. Skipping row.`);
@@ -117,7 +117,7 @@ export class CsvUploadService {
         id: Number(row.id),
         questionnaire: { id: questionnaireId },
         question: { id: questionId },
-        priority: Number(row.priority) || 0, // Default priority = 0
+        priority: Number(row.priority) || 0, 
       });
 
       console.log('Saving junction:', junction);

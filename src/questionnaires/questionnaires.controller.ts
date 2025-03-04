@@ -25,11 +25,6 @@ export class QuestionnairesController {
     return this.questionnairesService.getUserAnswers(userId);
   }
 
-  @Get(':id(\\d+)') // Ensure only numeric IDs are accepted
-  findOne(@Param('id') id: number) {
-    return this.questionnairesService.findOne(id);
-  }
-
   @Get(':id/questions')
   async getQuestions(@Param('id') id: number) {
     return this.questionnairesService.getQuestionsForQuestionnaire(id);
